@@ -1,0 +1,13 @@
+---
+- hosts: all
+
+  pre_tasks:
+    - name: load configuration
+      ansible.builtin.include_vars: config.yml
+
+  tasks:
+    - name: install yadm
+      ansible.builtin.import_tasks: tasks/install.yml
+
+    - name: clone the repo
+      ansible.builtin.import_tasks: tasks/clone.yml

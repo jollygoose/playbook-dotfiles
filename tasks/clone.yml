@@ -1,0 +1,15 @@
+---
+- name: check if dotfile repo has already been cloned
+  stat:
+    path: "{{ dotfile_path }}"
+  register: repo_exists
+
+- name: clone dotfiles
+  ansible.builtin.command: ~/.local/bin/yadm clone "{{ repo }}"
+  args:
+    chdir: ~/
+  when: not repo_exists.stat.exists
+
+- name: run the checkout command
+  ansible.builtin.command: ~/.local/bin/yadm checkout "/home/{{ ansible_user_id }}"
+  when: not repo_exists.stat.exists

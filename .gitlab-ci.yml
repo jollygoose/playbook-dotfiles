@@ -1,0 +1,12 @@
+---
+image: python:3.9-slim
+
+before_script:
+  - chmod 0640 .
+  - python -m pip install ansible-lint yamllint ansible-base
+
+lint_playbook:
+  stage: test
+  script:
+    - yamllint .
+    - ansible-lint

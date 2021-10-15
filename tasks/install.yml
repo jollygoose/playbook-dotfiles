@@ -1,0 +1,41 @@
+---
+- name: check if yadm is already installed
+  stat:
+    path: ~/.local/bin/yadm
+  register: yadm_exists
+
+- name: download yadm
+  tags: skip_ansible_lint
+  ansible.builtin.git:
+    repo: https://github.com/TheLocehiliosan/yadm
+    dest: /tmp/yadm/
+    clone: yes
+    track_submodules: no
+    recursive: no
+    depth: 1
+  when: not yadm_exists.stat.exists
+
+- name: get latest version
+  ansible.builtin.command: bash -c "git describe --tags | sed 's/^v//' | cut -d "-" -f1"
+  args:
+    chdir: /tmp/yadm
+  register: git_version
+  when: not yadm_exists.stat.exists
+
+- name: create destination directory
+  file:
+    path: "/home/{{ ansible_user_id }}/.local/bin/"
+    state: directory
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_id }}"
+    mode: '0740'
+
+- name: install yadm
+  ansible.builtin.command: cp /tmp/yadm/yadm "/home/{{ ansible_user_id }}/.local/bin/"
+  when: not yadm_exists.stat.exists
+
+- name: cleanup
+  file:
+    state: absent
+    path: /tmp/yadm
+  when: not yadm_exists.stat.exists
