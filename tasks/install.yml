@@ -24,14 +24,14 @@
 
 - name: create destination directory
   file:
-    path: "/home/{{ ansible_user_id }}/.local/bin/"
+    path: "~/.local/bin/"
     state: directory
     owner: "{{ ansible_user_id }}"
     group: "{{ ansible_user_id }}"
     mode: '0740'
 
 - name: install yadm
-  ansible.builtin.command: cp /tmp/yadm/yadm "/home/{{ ansible_user_id }}/.local/bin/"
+  ansible.builtin.command: cp /tmp/yadm/yadm "~/.local/bin/"
   when: not yadm_exists.stat.exists
 
 - name: cleanup

@@ -11,5 +11,5 @@
   when: not repo_exists.stat.exists
 
 - name: run the checkout command
-  ansible.builtin.command: ~/.local/bin/yadm checkout "/home/{{ ansible_user_id }}"
+  ansible.builtin.command: ~/.local/bin/yadm checkout ~/
   when: not repo_exists.stat.exists
