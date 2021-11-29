@@ -1,0 +1,31 @@
+---
+- name: check if starship exists
+  ansible.builtin.command: which starship
+  failed_when: false
+  changed_when: false
+  check_mode: false
+  register: starship_command_result
+
+- name: download starship install script
+  ansible.builtin.get_url:
+    url: https://starship.rs/install.sh
+    dest: /tmp/starship.sh
+    mode: 0700
+  when: starship_command_result.rc == 1
+
+- name: change install path to .local/bin
+  ansible.builtin.replace:
+    path: /tmp/starship.sh
+    regexp: '/usr/local/bin'
+    replace: '~/.local/bin'
+  when: starship_command_result.rc == 1
+
+- name: run starship install
+  ansible.builtin.command: /tmp/starship.sh -y
+  environment:
+    CHANNEL: stable
+  when: starship_command_result.rc == 1
+
+- name: reload the shell
+  ansible.builtin.command: source "{{ shell_config_path }}"
+  when: starship_command_result.rc == 1

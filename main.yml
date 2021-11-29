@@ -7,7 +7,10 @@
 
   tasks:
     - name: install yadm
-      ansible.builtin.import_tasks: tasks/install.yml
+      ansible.builtin.import_tasks: tasks/yadm_install.yml
 
     - name: clone the repo
-      ansible.builtin.import_tasks: tasks/clone.yml
+      ansible.builtin.import_tasks: tasks/yadm_clone.yml
+
+    - name: install starship
+      ansible.builtin.import_tasks: tasks/starship_install.yml
