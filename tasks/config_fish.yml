@@ -1,0 +1,5 @@
+---
+- name: set default shell to fish
+  become: yes
+  ansible.builtin.command: usermod -s /usr/bin/fish "{{ ansible_env.USER }}"
+  changed_when: false

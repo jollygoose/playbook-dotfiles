@@ -26,6 +26,6 @@
     CHANNEL: stable
   when: starship_command_result.rc == 1
 
-- name: reload the shell
-  ansible.builtin.command: source "{{ shell_config_path }}"
-  when: starship_command_result.rc == 1
+# - name: reload the shell
+#   ansible.builtin.command: source "{{ shell_config_path }}"
+#   when: starship_command_result.rc == 1

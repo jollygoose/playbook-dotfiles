@@ -6,6 +6,12 @@
       ansible.builtin.include_vars: config.yml
 
   tasks:
+    - name: install required packages
+      ansible.builtin.import_tasks: tasks/install_packages.yml
+
+    - name: change shell to fish
+      ansible.builtin.import_tasks: tasks/config_fish.yml
+
     - name: install yadm
       ansible.builtin.import_tasks: tasks/yadm_install.yml
 
