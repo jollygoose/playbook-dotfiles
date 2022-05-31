@@ -1,0 +1,6 @@
+---
+- include: install_packages.yaml
+- include: config_fish.yaml
+- include: yadm_install.yaml
+- include: yadm_clone.yaml
+- include: starship_install.yaml

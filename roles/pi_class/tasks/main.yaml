@@ -1,0 +1,4 @@
+---
+- name: set yadm class for the pis
+  ansible.builtin.command: yadm config local.class pi
+  changed_when: true

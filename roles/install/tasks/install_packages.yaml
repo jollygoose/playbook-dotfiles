@@ -1,10 +1,13 @@
 ---
-- name: install fish
+- name: install requirements
   become: yes
   ansible.builtin.apt:
-    name: fish
+    name: 
+      - fish
+      - vim
+      - git
     state: present
-  when: ansible_facts.os_family == "Debian"
+  when: ansible_facts.os_family == "Debian" or ansible_facts.os_family == "RedHat"
 
 # https://stackoverflow.com/a/41608975/17214978 -> for the AmazonLinux check
 - name: add fish repo

@@ -1,0 +1,4 @@
+---
+- name: set yadm class for the desktop
+  ansible.builtin.command: yadm config local.class desktop
+  changed_when: true

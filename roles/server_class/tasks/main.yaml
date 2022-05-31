@@ -1,0 +1,4 @@
+---
+- name: set yadm class for the server
+  ansible.builtin.command: yadm config local.class server
+  changed_when: true

@@ -1,0 +1,13 @@
+---
+- hosts: all
+  roles:
+    - role: install
+- hosts: pi
+  roles:
+    - role: pi_class
+- hosts: desktop
+  roles:
+    - role: desktop_class
+- hosts: server
+  roles:
+    - role: server_class
