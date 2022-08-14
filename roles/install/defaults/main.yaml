@@ -2,3 +2,4 @@
 dotfile_path: ~/.local/share/yadm/repo.git
 repo: https://github.com/jollygoose/dotfiles
 shell_config_path: ~/.config/fish/config.fish
+set_fish: false

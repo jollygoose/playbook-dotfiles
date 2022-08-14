@@ -1,7 +1,7 @@
 ---
 - name: install requirements
-  become: yes
-  ansible.builtin.apt:
+  become: true
+  ansible.builtin.package:
     name: 
       - fish
       - vim
@@ -11,7 +11,7 @@
 
 # https://stackoverflow.com/a/41608975/17214978 -> for the AmazonLinux check
 - name: add fish repo
-  become: yes
+  become: true
   ansible.builtin.shell: |
     cd /etc/yum.repos.d/
     wget https://download.opensuse.org/repositories/shells:fish:release:3/CentOS_8/shells:fish:release:3.repo
@@ -20,14 +20,14 @@
   when: ansible_distribution == "Amazon"
 
 - name: upgrade all packages
-  become: yes
+  become: true
   yum:
     name: '*'
-    update_cache: yes
+    update_cache: true
   when: ansible_distribution == "Amazon"
 
 - name: install fish and required packages
-  become: yes
+  become: true
   yum:
     name:
       - fish

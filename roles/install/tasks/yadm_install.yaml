@@ -9,7 +9,7 @@
   ansible.builtin.git:
     repo: https://github.com/TheLocehiliosan/yadm
     dest: /tmp/yadm/
-    clone: yes
+    clone: true
     track_submodules: no
     recursive: no
     depth: 1
