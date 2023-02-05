@@ -1,6 +1,16 @@
 ---
 - include: install_packages.yaml
+
 - include: set_default_shell.yaml
+
 - include: yadm_install.yaml
-- include: yadm_clone.yaml
+  when: ansible_facts.os_family != "Darwin"
+
+- include: yadm_init_linux.yaml
+  when: ansible_facts.os_family != "Darwin"
+
+- include: yadm_init_mac.yaml
+  when: ansible_facts.os_family == "Darwin"
+
 - include: starship_install.yaml
+  when: ansible_facts.os_family != "Darwin"
