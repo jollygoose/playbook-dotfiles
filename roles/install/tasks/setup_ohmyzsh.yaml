@@ -1,0 +1,22 @@
+---
+- name: check if plugin ohmyzsh is already installed
+  stat:
+    path: ~/.oh-my-zsh
+  register: ohmysh_exists
+
+- name: download ohmyzsh install script
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+    dest: /tmp/ohmyzsh.sh
+    mode: 0700
+  when: not ohmysh_exists.stat.exists
+
+- name: run ohmyzsh install
+  ansible.builtin.command: zsh /tmp/ohmyzsh.sh
+  environment:
+    CHANNEL: stable
+  when: not ohmysh_exists.stat.exists
+
+- name: download ohmyzsh history plugin
+  ansible.builtin.command: git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
+  when: not ohmysh_exists.stat.exists and (ansible_facts.os_family == "Debian" or ansible_facts.os_family == "RedHat")

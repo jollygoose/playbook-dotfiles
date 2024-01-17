@@ -4,8 +4,10 @@
   ansible.builtin.package:
     name: 
       - fish
-      - vim
       - git
+      - vim
+      - zsh
+      - zsh-syntax-highlighting
     state: present
   when: ansible_facts.os_family == "Debian" or ansible_facts.os_family == "RedHat"
 
@@ -13,10 +15,13 @@
   community.general.homebrew:
     name: 
       - fish
-      - vim
       - git
       - starship
+      - vim
       - yadm
+      - zsh
+      - zsh-history-substring-search
+      - zsh-syntax-highlighting
     state: present
   when: ansible_facts.os_family == "Darwin"
 
@@ -43,4 +48,5 @@
     name:
       - fish
       - git
+      - zsh
   when: ansible_distribution == "Amazon"
