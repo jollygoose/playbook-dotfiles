@@ -1,16 +1,11 @@
 ---
-- name: check if plugin ohmyzsh is already installed
+- name: check if plugin tmux plugins is already installed
   stat:
     path: ~/.tmux/plugins/tpm
   register: tmux_exists
 
 - name: create destination directory
-  file:
-    path: "~/.tmux/plugins/tpm"
-    state: directory
-    owner: "{{ ansible_user_id }}"
-    group: "{{ ansible_user_id }}"
-    mode: '0755'
+  ansible.builtin.command: mkdir -p ~/.tmux/plugins/tpm
   when: not tmux_exists.stat.exists
 
 - name: download tpm
