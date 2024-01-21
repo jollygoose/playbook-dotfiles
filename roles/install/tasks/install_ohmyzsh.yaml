@@ -28,15 +28,3 @@
 - name: install zsh history plugin
   ansible.builtin.command: echo "source ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
   when: not ohmysh_exists.stat.exists and (ansible_facts.os_family == "Debian" or ansible_facts.os_family == "RedHat")
-
-
-# - name: download zsh-history-substring-search
-#   tags: skip_ansible_lint
-#   ansible.builtin.git:
-#     repo: https://github.com/TheLocehiliosan/yadm
-#     dest: /tmp/yadm/
-#     clone: true
-#     track_submodules: no
-#     recursive: no
-#     depth: 1
-#   when: not yadm_exists.stat.exists ansible_facts.os_family == "Debian" or ansible_facts.os_family == "RedHat"
