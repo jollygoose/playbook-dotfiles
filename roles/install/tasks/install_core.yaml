@@ -1,0 +1,28 @@
+---
+- name: install requirements (linux)
+  become: true
+  ansible.builtin.package:
+    name: 
+      - git
+      - tmux
+      - vim
+      - xclip
+      - xsel
+      - zsh
+      - zsh-syntax-highlighting
+    state: present
+  when: ansible_facts.os_family == "Debian" or ansible_facts.os_family == "RedHat"
+
+- name: install requirements (mac)
+  community.general.homebrew:
+    name: 
+      - git
+      - tmux
+      - starship
+      - vim
+      - yadm
+      - zsh
+      - zsh-history-substring-search
+      - zsh-syntax-highlighting
+    state: present
+  when: ansible_facts.os_family == "Darwin"

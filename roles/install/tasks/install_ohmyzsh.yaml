@@ -1,0 +1,42 @@
+---
+- name: check if plugin ohmyzsh is already installed
+  stat:
+    path: ~/.oh-my-zsh
+  register: ohmysh_exists
+
+- name: download ohmyzsh install script
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+    dest: /tmp/ohmyzsh.sh
+    mode: 0700
+  when: not ohmysh_exists.stat.exists
+
+- name: run ohmyzsh install
+  ansible.builtin.command: zsh /tmp/ohmyzsh.sh
+  environment:
+    CHANNEL: stable
+  when: not ohmysh_exists.stat.exists
+
+- name: download zsh history plugin
+  ansible.builtin.command: git clone https://github.com/zsh-users/zsh-history-substring-search ~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
+  when: not ohmysh_exists.stat.exists and (ansible_facts.os_family == "Debian" or ansible_facts.os_family == "RedHat")
+
+- name: download zsh syntax highlighting plugin
+  ansible.builtin.command: git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+  when: not ohmysh_exists.stat.exists and (ansible_facts.os_family == "Debian" or ansible_facts.os_family == "RedHat")
+
+- name: install zsh history plugin
+  ansible.builtin.command: echo "source ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
+  when: not ohmysh_exists.stat.exists and (ansible_facts.os_family == "Debian" or ansible_facts.os_family == "RedHat")
+
+
+# - name: download zsh-history-substring-search
+#   tags: skip_ansible_lint
+#   ansible.builtin.git:
+#     repo: https://github.com/TheLocehiliosan/yadm
+#     dest: /tmp/yadm/
+#     clone: true
+#     track_submodules: no
+#     recursive: no
+#     depth: 1
+#   when: not yadm_exists.stat.exists ansible_facts.os_family == "Debian" or ansible_facts.os_family == "RedHat"

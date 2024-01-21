@@ -1,12 +1,14 @@
 ---
-- ansible.builtin.include_tasks: install_packages.yaml
-- ansible.builtin.include_tasks: setup_ohmyzsh.yaml
-- ansible.builtin.include_tasks: set_default_shell.yaml
-- ansible.builtin.include_tasks: yadm_install.yaml
-  when: ansible_facts.os_family != "Darwin"
+- ansible.builtin.include_tasks: install_core.yaml
+- ansible.builtin.include_tasks: install_ohmyzsh.yaml
+- ansible.builtin.include_tasks: install_tmux.yaml
 - ansible.builtin.include_tasks: yadm_init_linux.yaml
   when: ansible_facts.os_family != "Darwin"
+- ansible.builtin.include_tasks: install_yadm.yaml
+  when: ansible_facts.os_family != "Darwin"
+# yadm and starship already available through brew in install_core
 - ansible.builtin.include_tasks: yadm_init_mac.yaml
   when: ansible_facts.os_family == "Darwin"
 - ansible.builtin.include_tasks: starship_install.yaml
   when: ansible_facts.os_family != "Darwin"
+- ansible.builtin.include_tasks: set_default_shell.yaml
