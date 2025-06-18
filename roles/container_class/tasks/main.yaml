@@ -1,0 +1,4 @@
+---
+- name: set yadm class for the container
+  ansible.builtin.command: yadm config local.class container
+  changed_when: true
